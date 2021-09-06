@@ -1,3 +1,3 @@
 # Random stock picker
 
-Picks a random stock.
+Picks a random stock from the Finnhub database.
