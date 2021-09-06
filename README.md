@@ -1,2 +1,3 @@
-# random-stock-picker
-Random stock picker
+# Random stock picker
+
+Picks a random stock.
