@@ -3,12 +3,11 @@ import React, { useEffect, useState } from 'react';
 import StockCard from './StockCard'
 
 function App() {
+
     const [stockList, setStockList] = useState(0);
     const [ticker, setTicker] = useState("Searching...");
-    const [name, setName] = useState("Searching...");
-    const [market, setMarket] = useState("Searching...");
 
-
+    
     function getRandomInt(min, max) {
         min = Math.ceil(min);
         max = Math.floor(max);
@@ -21,9 +20,6 @@ function App() {
         }
         let randomStock = stockList[getRandomInt(0,stockList.length)];
         setTicker(randomStock.displaySymbol);
-        setName(randomStock.description);
-        setMarket(randomStock.mic);
-        console.log(ticker)
     }
 
     function fetchStocks(){
@@ -54,12 +50,12 @@ function App() {
   return (
     
     <div className="w-full h-screen font-sans">
-        <div className="grid grid-cols-3 grid-rows-3 gap-4">
-            <div className="col-span-1">
-                <StockCard ticker={ticker} name={name} market={market}/>
+        <div className="grid grid-cols-10 grid-rows-3 gap-4">
+            <div className="col-span-3">
+                <StockCard ticker={ticker}/>
             </div>
             {/* CENTER */}
-            <div className="col-start-2 col-span-1 row-start-2 row-span-1">
+            <div className="col-start-5 col-span-2 row-start-2 row-span-1">
                 <div className="w-full max-w-sm p-10 m-auto bg-white bg-opacity-25 rounded shadow-xl">
                     <h1 className="mb-8 text-3xl font-light text-center text-white">
                         Random Stock Picker
