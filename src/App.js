@@ -1,10 +1,13 @@
 import './App.css';
 import React, { useEffect, useState } from 'react';
-
+import StockCard from './StockCard'
 
 function App() {
     const [stockList, setStockList] = useState(0);
     const [ticker, setTicker] = useState("Searching...");
+    const [name, setName] = useState("Searching...");
+    const [market, setMarket] = useState("Searching...");
+
 
     function getRandomInt(min, max) {
         min = Math.ceil(min);
@@ -16,7 +19,10 @@ function App() {
         if(stockList[getRandomInt(0,stockList.length)] === undefined){
             return;
         }
-        setTicker(stockList[getRandomInt(0,stockList.length)].displaySymbol);
+        let randomStock = stockList[getRandomInt(0,stockList.length)];
+        setTicker(randomStock.displaySymbol);
+        setName(randomStock.description);
+        setMarket(randomStock.mic);
         console.log(ticker)
     }
 
@@ -31,9 +37,10 @@ function App() {
             })
             .then(function(data){
                 setStockList(data);
-            }).then(console.log(stockList));
+            });
         
     }
+
 
     useEffect(() => {
         fetchStocks();
@@ -47,9 +54,13 @@ function App() {
   return (
     
     <div className="w-full h-screen font-sans">
-        <div className="container flex items-center justify-center flex-1 h-full mx-auto">
-            <div className="w-full max-w-lg leading-loose">
-                <form className="max-w-sm p-10 m-auto bg-white bg-opacity-25 rounded shadow-xl">
+        <div className="grid grid-cols-3 grid-rows-3 gap-4">
+            <div className="col-span-1">
+                <StockCard ticker={ticker} name={name} market={market}/>
+            </div>
+            {/* CENTER */}
+            <div className="col-start-2 col-span-1 row-start-2 row-span-1">
+                <div className="w-full max-w-sm p-10 m-auto bg-white bg-opacity-25 rounded shadow-xl">
                     <h1 className="mb-8 text-3xl font-light text-center text-white">
                         Random Stock Picker
                     </h1>
@@ -60,10 +71,10 @@ function App() {
                         <button type="button" onClick={getSingleStock} className="py-2 px-4  bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
                             I want a stock!
                         </button>
-                        
                     </div>
-                </form>
+                </div>
             </div>
+
         </div>
     </div>
 
