@@ -50,13 +50,13 @@ function App() {
   return (
     
     <div className="w-full h-screen font-sans">
-        <div className="grid grid-cols-12 grid-rows-12 gap-2">
-            <div className="col-span-3 row-span-6">
+        <div className="grid grid-cols-12">
+            <div className="col-span-4">
                 <StockCard ticker={ticker}/>
             </div>
             {/* CENTER */}
-            <div className="col-start-6 col-span-2 row-start-6 row-span-2 auto-rows-max">
-                <div className="w-full h-full max-w-sm p-10 m-auto bg-white bg-opacity-25 rounded shadow-xl">
+            <div className="grid col-start-6 col-span-2 grid-rows-3">
+                <div className="w-full h-full max-w-sm p-10 m-auto bg-white bg-opacity-25 rounded shadow-xl row-start-2">
                     <h1 className="mb-8 text-3xl font-light text-center text-white">
                         Random Stock Picker
                     </h1>

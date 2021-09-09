@@ -24,23 +24,23 @@ function StockCard({ticker}) {
     const [grossProfitTTM , setGrossProfitTTM ] = useState("Searching...");
 
 
-        /* PER SHARE */
-        const [bookValue, setBookValue ] = useState("Searching...");
-        const [eps , setEPS ] = useState("Searching...");
-        const [revenuePerShareTTM , setRevenuePerShareTTM ] = useState("Searching...");
-        const [dilutedEPSTTM , setDilutedEPSTTM ] = useState("Searching...");
+    /* PER SHARE */
+    const [bookValue, setBookValue ] = useState("Searching...");
+    const [eps , setEPS ] = useState("Searching...");
+    const [revenuePerShareTTM , setRevenuePerShareTTM ] = useState("Searching...");
+    const [dilutedEPSTTM , setDilutedEPSTTM ] = useState("Searching...");
 
-         /* Margins */
-        const [profitMargin , setProfitMargin ] = useState("Searching...");
-        const [operatingMarginTTM , setOperatingMarginTTM ] = useState("Searching...");
+        /* Margins */
+    const [profitMargin , setProfitMargin ] = useState("Searching...");
+    const [operatingMarginTTM , setOperatingMarginTTM ] = useState("Searching...");
 
-        /* Ratios */
-        const [returnOnAssetsTTM , setReturnOnAssetsTTM ] = useState("Searching...");
-        const [returnOnEquityTTM , setReturnOnEquityTTM ] = useState("Searching...");
-    
-        /* Growth */
-        const [quarterlyEarningsGrowthYOY , setQuarterlyEarningsGrowthYOY ] = useState("Searching...");
-        const [quarterlyRevenueGrowthYOY , setQuarterlyRevenueGrowthYOY ] = useState("Searching...");
+    /* Ratios */
+    const [returnOnAssetsTTM , setReturnOnAssetsTTM ] = useState("Searching...");
+    const [returnOnEquityTTM , setReturnOnEquityTTM ] = useState("Searching...");
+
+    /* Growth */
+    const [quarterlyEarningsGrowthYOY , setQuarterlyEarningsGrowthYOY ] = useState("Searching...");
+    const [quarterlyRevenueGrowthYOY , setQuarterlyRevenueGrowthYOY ] = useState("Searching...");
     
 
     /* VALUATION */
@@ -79,7 +79,6 @@ function StockCard({ticker}) {
     }
 
     function fetchCompanyOverview(ticker){
-        
         let API_KEY = 'J99K9XKIP0I6V97F';
         let API_Call = 'https://www.alphavantage.co/query?function=OVERVIEW&symbol='+ ticker +'&apikey='+ API_KEY;
 
@@ -96,6 +95,7 @@ function StockCard({ticker}) {
     function fetchCompanyOverview2(ticker){
         /* https://api.tiingo.com/tiingo/fundamentals/definitions */
         /* https://api.tiingo.com/documentation/fundamentals */
+
         /* let API_KEY = '3970f9ec2562c6d7f294e30bc2d8d40af51bbec6';
         let API_Call = 'https://www.alphavantage.co/query?function=OVERVIEW&symbol='+ 'FB' +'&apikey='+ API_KEY;
 
@@ -132,7 +132,7 @@ function StockCard({ticker}) {
             setCurrency("Not found");
             setShares("Not found");
         }
-        
+
         if(companyOverview.Name !== undefined){
             setDescription(companyOverview.Description);
             setEBITDA(companyOverview.EBITDA);
@@ -194,7 +194,7 @@ function StockCard({ticker}) {
 
     useEffect(() => {
         fetchProfile(ticker);
-        fetchCompanyOverview(ticker);
+        fetchCompanyOverview("FB");
     },[ticker]);
 
     useEffect(() => {
@@ -202,8 +202,8 @@ function StockCard({ticker}) {
     });
 
 return(
-<div className="p-5 bg-white bg-opacity-25 rounded shadow-xl">
-    <div className="flex items-center justify-between mb-6">
+<div className="p-7 bg-white bg-opacity-25 rounded shadow-xl">
+    <div className="flex items-center justify-between">
         <div className="flex flex-col">
             {/* HEADER */}
             <div className="flex px-4">
@@ -235,46 +235,137 @@ return(
                     {years} years since IPO
                 </span>
             </div>
-            <div className="flex flex-col ml-3 mb-3">
+            <div className="flex flex-col  ">
                 <span className="text-sm text-white ">
                     {description}
                 </span>
             </div>
-            <hr className=" border-opacity-25 ml-3 mb-2"></hr>
-            <div className="flex flex-col ml-3">
-                {/* Valuation */}
-                <h1 className="text-white font-bold">Valuation:</h1>
-                <span className="text-sm text-white ">
-                        Price / Earnings = {per}
-                </span>
-                <span className="text-sm text-white ">
-                        PER / Growth = {peg}
-                </span>
-                <span className="text-sm text-white ">
-                        Analyst Price Target = {analystTargetPrice}
-                </span>
-                <span className="text-sm text-white ">
-                        Price / Trailing Earnings = {trailingPE}
-                </span>
-                <span className="text-sm text-white ">
-                        Price / Forward Earnings = {forwardPE}
-                </span>
-                <span className="text-sm text-white ">
-                        Price / Sales = {priceToSalesRatioTTM}
-                </span>
-                <span className="text-sm text-white ">
-                        Price / Sales = {priceToSalesRatioTTM}
-                </span>
-                <span className="text-sm text-white ">
-                        Price / Book Value = {priceToBookRatio}
-                </span>
-                <span className="text-sm text-white ">
-                        Enterprise Value / Revenue = {evToRevenue}
-                </span>
-                <span className="text-sm text-white ">
-                        Enterprise Value / EBITDA = {evToEBITDA}
-                </span>
+            {/* HEADER ENDS */}
+            <hr className=" border-opacity-25 m-5"></hr>
+            {/* BODY */}
+            <div className="grid grid-cols-2 gap-y-4">
                 
+                <div className="flex flex-col">
+                    {/* Financials */}
+                    <h1 className="text-white font-bold">Financials:</h1>
+                    <span className="text-sm text-white ">
+                            EBITDA: {EBITDA}
+                    </span>
+                    <span className="text-sm text-white ">
+                            Revenue TTM = {revenueTTM}
+                    </span>
+                    <span className="text-sm text-white ">
+                            Gross Profit TTM = {grossProfitTTM}
+                    </span>
+                </div>
+                
+                <div className="flex flex-col  ">
+                    {/* PER SHARE */}
+                    <h1 className="text-white font-bold">Per Share:</h1>
+                    <span className="text-sm text-white ">
+                            Basic EPS: {eps}
+                    </span>
+                    <span className="text-sm text-white ">
+                            Book Value = {bookValue}
+                    </span>
+                    <span className="text-sm text-white ">
+                            Revenue per Share TTM = {revenuePerShareTTM}
+                    </span>
+                    <span className="text-sm text-white ">
+                            Diluted EPS TTM = {dilutedEPSTTM}
+                    </span>
+                </div>
+                
+                <div className="flex flex-col  ">
+                    {/* Margins */}
+                    <h1 className="text-white font-bold">Margins:</h1>
+                    <span className="text-sm text-white ">
+                            Profit Margin: {profitMargin}
+                    </span>
+                    <span className="text-sm text-white ">
+                            Operating Margin TTM = {operatingMarginTTM}
+                    </span>
+                </div>
+                
+                <div className="flex flex-col  ">
+                    {/* Ratios */}
+                    <h1 className="text-white font-bold">Ratios:</h1>
+                    <span className="text-sm text-white ">
+                            Return on Assets TTM: {returnOnAssetsTTM}
+                    </span>
+                    <span className="text-sm text-white ">
+                            Return on Equity TTM: {returnOnEquityTTM}
+                    </span>
+
+                </div>
+                
+                <div className="flex flex-col  ">
+                    {/* Growth */}
+                    <h1 className="text-white font-bold">Ratios:</h1>
+                    <span className="text-sm text-white ">
+                            Quarterly Earnings Growth YoY: {quarterlyEarningsGrowthYOY}
+                    </span>
+                    <span className="text-sm text-white ">
+                            Quarterly Revenue Growth YoY: {quarterlyRevenueGrowthYOY}
+                    </span>
+                </div>
+                
+                <div className="flex flex-col  ">
+                    {/* Ownership */}
+                    <h1 className="text-white font-bold">Ownership:</h1>
+                    <span className="text-sm text-white ">
+                            Insider Ownership: {percentInsiders}
+                    </span>
+                    <span className="text-sm text-white ">
+                            Institutional Ownership: {percentInstitutions}
+                    </span>
+                </div>
+                
+                <div className="flex flex-col  ">
+                    {/* DIVIDEND */}
+                    <h1 className="text-white font-bold">Ratios:</h1>
+                    <span className="text-sm text-white ">
+                            Dividend per Share: {dividendPerShare}
+                    </span>
+                    <span className="text-sm text-white ">
+                            Dividend Yield: {dividendYield}
+                    </span>
+                </div>
+                
+                <div className="flex flex-col  ">
+                    {/* Valuation */}
+                    <h1 className="text-white font-bold">Valuation:</h1>
+                    <span className="text-sm text-white ">
+                            Price / Earnings = {per}
+                    </span>
+                    <span className="text-sm text-white ">
+                            PER / Growth = {peg}
+                    </span>
+                    <span className="text-sm text-white ">
+                            Analyst Price Target = {analystTargetPrice}
+                    </span>
+                    <span className="text-sm text-white ">
+                            Price / Trailing Earnings = {trailingPE}
+                    </span>
+                    <span className="text-sm text-white ">
+                            Price / Forward Earnings = {forwardPE}
+                    </span>
+                    <span className="text-sm text-white ">
+                            Price / Sales = {priceToSalesRatioTTM}
+                    </span>
+                    <span className="text-sm text-white ">
+                            Price / Sales = {priceToSalesRatioTTM}
+                    </span>
+                    <span className="text-sm text-white ">
+                            Price / Book Value = {priceToBookRatio}
+                    </span>
+                    <span className="text-sm text-white ">
+                            Enterprise Value / Revenue = {evToRevenue}
+                    </span>
+                    <span className="text-sm text-white ">
+                            Enterprise Value / EBITDA = {evToEBITDA}
+                    </span>
+                </div>
             </div>
         </div>
     </div>
