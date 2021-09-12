@@ -50,23 +50,25 @@ function App() {
   return (
     
     <div className="w-full h-screen font-sans">
-        <div className="grid grid-cols-12">
-            <div className="col-span-4">
+        <div className="grid grid-cols-7 ">
+            <div className="col-span-4 m-6">
                 <StockCard ticker={ticker}/>
             </div>
             {/* CENTER */}
-            <div className="grid col-start-6 col-span-2 grid-rows-3">
-                <div className="w-full h-full max-w-sm p-10 m-auto bg-white bg-opacity-25 rounded shadow-xl row-start-2">
-                    <h1 className="mb-8 text-3xl font-light text-center text-white">
-                        Random Stock Picker
-                    </h1>
-                    <div className="mb-8 text-5xl text-center text-white">
-                        <h2>{ticker}</h2>
-                    </div>
-                    <div className="flex items-center justify-between mt-4">
-                        <button type="button" onClick={getSingleStock} className="py-2 px-4  bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
-                            I want a stock!
-                        </button>
+            <div className="col-start-5 col-span-3 ml-0 m-6">
+                <div className="grid grid-rows-10">
+                    <div className="w-full p-10 bg-white bg-opacity-25 rounded shadow-xl row-start-1 row-end-2">
+                        <h1 className="mb-8 text-3xl font-light text-center text-white">
+                            Random Stock Picker
+                        </h1>
+                        <div className="mb-8 text-5xl text-center text-white">
+                            <h2>{ticker}</h2>
+                        </div>
+                        <div className="flex items-center justify-between mt-4">
+                            <button type="button" onClick={getSingleStock} className="py-2 px-4 bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
+                                I want a stock!
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>

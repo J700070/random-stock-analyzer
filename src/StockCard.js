@@ -10,7 +10,6 @@ function StockCard({ticker}) {
     const [market, setMarket] = useState("Searching...");
     const [years, setYears] = useState("Searching...");
     const [marketCap, setMarketCap] = useState("Searching...");
-    const [web, setWeb] = useState("Searching...");
     const [industry, setIndustry] = useState("Searching...");
     const [currency, setCurrency] = useState("Searching...");
     const [shares, setShares] = useState("Searching...");
@@ -29,6 +28,7 @@ function StockCard({ticker}) {
     const [eps , setEPS ] = useState("Searching...");
     const [revenuePerShareTTM , setRevenuePerShareTTM ] = useState("Searching...");
     const [dilutedEPSTTM , setDilutedEPSTTM ] = useState("Searching...");
+    const [dividendPerShare, setDividendPerShare ] = useState("Searching...");
 
         /* Margins */
     const [profitMargin , setProfitMargin ] = useState("Searching...");
@@ -58,10 +58,7 @@ function StockCard({ticker}) {
     const [percentInsiders , setPercentInsiders ] = useState("Searching...");
     const [percentInstitutions , setPercentInstitutions ] = useState("Searching...");
 
-
-    /* DIVIDEND */
-    const [dividendPerShare, setDividendPerShare ] = useState("Searching...");
-    const [dividendYield , setDividendYield ] = useState("Searching...");
+    let currencySymbol = "$";
 
     function fetchProfile(ticker){
         
@@ -117,7 +114,6 @@ function StockCard({ticker}) {
             setMarket(profile.exchange);
             setYears(new Date().getFullYear() - (profile.ipo).split("-")[0]);
             setMarketCap(profile.marketCapitalization);
-            setWeb(profile.weburl);
             setIndustry(profile.finnhubIndustry);
             setCurrency(profile.currency);
             setShares(profile.shareOutstanding);
@@ -127,7 +123,6 @@ function StockCard({ticker}) {
             setMarket("Not found");
             setYears("Not found");
             setMarketCap("Not found");
-            setWeb("Not found");
             setIndustry("Not found");
             setCurrency("Not found");
             setShares("Not found");
@@ -140,7 +135,6 @@ function StockCard({ticker}) {
             setPEG(companyOverview.PEGRatio);
             setBookValue(companyOverview.BookValue);
             setDividendPerShare(companyOverview.DividendPerShare);
-            setDividendYield(companyOverview.DividendYield);
             setEPS(companyOverview.EPS);
             setRevenuePerShareTTM(companyOverview.RevenuePerShareTTM);
             setProfitMargin(companyOverview.ProfitMargin);
@@ -168,7 +162,6 @@ function StockCard({ticker}) {
             setPEG("Not found");
             setBookValue("Not found");
             setDividendPerShare("Not found");
-            setDividendYield("Not found");
             setEPS("Not found");
             setRevenuePerShareTTM("Not found");
             setProfitMargin("Not found");
@@ -194,7 +187,7 @@ function StockCard({ticker}) {
 
     useEffect(() => {
         fetchProfile(ticker);
-        fetchCompanyOverview("FB");
+        fetchCompanyOverview(ticker);
     },[ticker]);
 
     useEffect(() => {
@@ -203,12 +196,12 @@ function StockCard({ticker}) {
 
 return(
 <div className="p-7 bg-white bg-opacity-25 rounded shadow-xl">
-    <div className="flex items-center justify-between">
+    <div className="flex items-center justify-between p-5">
         <div className="flex flex-col">
             {/* HEADER */}
-            <div className="flex px-4">
+            <div className="flex">
                 <img id="stockLogo" alt="" src={logo}/>
-                <div className="flex flex-col ml-2">
+                <div className="flex flex-col ml-2 w-1/2 mb-2">
                     <span className="font-bold text-md text-white ">
                         {ticker}
                     </span>
@@ -216,46 +209,52 @@ return(
                         {name}
                     </span>
                     <span className="text-sm text-white ">
-                        Market Cap: {marketCap} (million {currency})
+                        Market Cap: {currencySymbol} {marketCap} millions
                     </span>
                     <span className="text-sm text-white ">
-                        Outstanding Shares: {shares} million
+                        Outstanding Shares: {shares} millions
                     </span>
                 </div>
-            </div>
-            <div className="flex items-center justify-start m-3 space-x-2">
+
                 {/* TAGS */}
-                <span className="px-2 py-1 flex items-center font-semibold text-xs rounded-md text-gray-500 bg-gray-200">
-                    {market}
-                </span>
-                <span className="px-2 py-1 flex items-center font-semibold text-xs rounded-md text-gray-500 bg-gray-200">
-                    {industry}
-                </span>
-                <span className="px-2 py-1 flex items-center font-semibold text-xs rounded-md text-gray-500 bg-gray-200">
-                    {years} years since IPO
-                </span>
+                <div className="flex justify-start content-start mx-6 gap-2 h-32 flex-wrap flex-shrink w-1/2 max-h-2">
+                    <span className="p-2 flex font-semibold text-xs rounded-md text-gray-500 bg-gray-200">
+                        {market}
+                    </span>
+                    <span className="p-2 flex font-semibold text-xs rounded-md text-gray-500 bg-gray-200">
+                        {industry}
+                    </span>
+                    <span className="p-2 flex font-semibold text-xs rounded-md text-gray-500 bg-gray-200">
+                        {years} years since IPO
+                    </span>
+
+                </div>
             </div>
-            <div className="flex flex-col  ">
+            
+            <div className="flex flex-col">
                 <span className="text-sm text-white ">
                     {description}
                 </span>
             </div>
             {/* HEADER ENDS */}
-            <hr className=" border-opacity-25 m-5"></hr>
+            <hr className=" border-opacity-25 m-10"></hr>
             {/* BODY */}
-            <div className="grid grid-cols-2 gap-y-4">
+            <div className="grid grid-cols-3 gap-12">
                 
                 <div className="flex flex-col">
                     {/* Financials */}
                     <h1 className="text-white font-bold">Financials:</h1>
                     <span className="text-sm text-white ">
-                            EBITDA: {EBITDA}
+                            Revenue TTM: {currencySymbol} {revenueTTM}
                     </span>
                     <span className="text-sm text-white ">
-                            Revenue TTM = {revenueTTM}
+                            Gross Profit TTM: {currencySymbol} {grossProfitTTM}
                     </span>
                     <span className="text-sm text-white ">
-                            Gross Profit TTM = {grossProfitTTM}
+                            EBITDA: {currencySymbol} {EBITDA}
+                    </span>
+                    <span className="text-sm text-white ">
+                            Net Income: {currencySymbol} TODO
                     </span>
                 </div>
                 
@@ -263,16 +262,23 @@ return(
                     {/* PER SHARE */}
                     <h1 className="text-white font-bold">Per Share:</h1>
                     <span className="text-sm text-white ">
-                            Basic EPS: {eps}
+                            Revenue per Share TTM:  {currencySymbol} {revenuePerShareTTM}
                     </span>
                     <span className="text-sm text-white ">
-                            Book Value = {bookValue}
+                            Basic EPS: {currencySymbol} {eps}
+                    </span>
+                    
+                    <span className="text-sm text-white ">
+                            Diluted EPS TTM: {currencySymbol} {dilutedEPSTTM}
                     </span>
                     <span className="text-sm text-white ">
-                            Revenue per Share TTM = {revenuePerShareTTM}
+                            Book Value per Share: {currencySymbol} {bookValue}
                     </span>
                     <span className="text-sm text-white ">
-                            Diluted EPS TTM = {dilutedEPSTTM}
+                            Cash Flow per Share: {currencySymbol} TODO
+                    </span>
+                    <span className="text-sm text-white ">
+                            Dividend per Share: {currencySymbol} {dividendPerShare}
                     </span>
                 </div>
                 
@@ -280,92 +286,92 @@ return(
                     {/* Margins */}
                     <h1 className="text-white font-bold">Margins:</h1>
                     <span className="text-sm text-white ">
-                            Profit Margin: {profitMargin}
+                            Gross Margin TTM: TODO%
                     </span>
                     <span className="text-sm text-white ">
-                            Operating Margin TTM = {operatingMarginTTM}
+                            Operating Margin TTM: {operatingMarginTTM}%
                     </span>
+                    <span className="text-sm text-white ">
+                            Net Margin TTM: {profitMargin}%
+                    </span>
+                    
                 </div>
                 
                 <div className="flex flex-col  ">
                     {/* Ratios */}
                     <h1 className="text-white font-bold">Ratios:</h1>
                     <span className="text-sm text-white ">
-                            Return on Assets TTM: {returnOnAssetsTTM}
+                            Return on Assets TTM: {returnOnAssetsTTM}%
                     </span>
                     <span className="text-sm text-white ">
-                            Return on Equity TTM: {returnOnEquityTTM}
+                            Return on Equity TTM: {returnOnEquityTTM}%
+                    </span>
+                    <span className="text-sm text-white ">
+                            Return on Invested Capital TTM: TODO%
                     </span>
 
                 </div>
                 
                 <div className="flex flex-col  ">
                     {/* Growth */}
-                    <h1 className="text-white font-bold">Ratios:</h1>
+                    <h1 className="text-white font-bold">Growth:</h1>
                     <span className="text-sm text-white ">
-                            Quarterly Earnings Growth YoY: {quarterlyEarningsGrowthYOY}
+                        Qrtly Revenue Growth YoY: {quarterlyRevenueGrowthYOY}%
                     </span>
                     <span className="text-sm text-white ">
-                            Quarterly Revenue Growth YoY: {quarterlyRevenueGrowthYOY}
+                        Qrtly Earnings Growth YoY: {quarterlyEarningsGrowthYOY}%
                     </span>
+                    
                 </div>
                 
                 <div className="flex flex-col  ">
                     {/* Ownership */}
                     <h1 className="text-white font-bold">Ownership:</h1>
                     <span className="text-sm text-white ">
-                            Insider Ownership: {percentInsiders}
+                            Insider Ownership: {percentInsiders}%
                     </span>
                     <span className="text-sm text-white ">
-                            Institutional Ownership: {percentInstitutions}
+                            Institutional Ownership: {percentInstitutions}%
                     </span>
                 </div>
                 
-                <div className="flex flex-col  ">
-                    {/* DIVIDEND */}
-                    <h1 className="text-white font-bold">Ratios:</h1>
-                    <span className="text-sm text-white ">
-                            Dividend per Share: {dividendPerShare}
-                    </span>
-                    <span className="text-sm text-white ">
-                            Dividend Yield: {dividendYield}
-                    </span>
-                </div>
-                
-                <div className="flex flex-col  ">
-                    {/* Valuation */}
+            </div>
+            <hr className="border-opacity-25 m-10"></hr>
+            {/* Valuation */}
+            <div className="flex flex-col flex-wrap max-h-36">
                     <h1 className="text-white font-bold">Valuation:</h1>
                     <span className="text-sm text-white ">
-                            Price / Earnings = {per}
+                            Price / Earnings: {per}x
                     </span>
                     <span className="text-sm text-white ">
-                            PER / Growth = {peg}
+                            PEG: {peg}x
                     </span>
                     <span className="text-sm text-white ">
-                            Analyst Price Target = {analystTargetPrice}
+                            Price / Trailing Earnings: {trailingPE}x
                     </span>
                     <span className="text-sm text-white ">
-                            Price / Trailing Earnings = {trailingPE}
+                            Price / Forward Earnings: {forwardPE}x
                     </span>
                     <span className="text-sm text-white ">
-                            Price / Forward Earnings = {forwardPE}
+                        Analyst Price Target: {currencySymbol}  {analystTargetPrice}
                     </span>
                     <span className="text-sm text-white ">
-                            Price / Sales = {priceToSalesRatioTTM}
+                            Price / Sales: {priceToSalesRatioTTM}x
                     </span>
                     <span className="text-sm text-white ">
-                            Price / Sales = {priceToSalesRatioTTM}
+                            Price / Sales: {priceToSalesRatioTTM}x
                     </span>
                     <span className="text-sm text-white ">
-                            Price / Book Value = {priceToBookRatio}
+                            Price / Book Value: {priceToBookRatio}x
                     </span>
                     <span className="text-sm text-white ">
-                            Enterprise Value / Revenue = {evToRevenue}
+                            Enterprise Value / Revenue: {evToRevenue}x
                     </span>
                     <span className="text-sm text-white ">
-                            Enterprise Value / EBITDA = {evToEBITDA}
-                    </span>
-                </div>
+                            Enterprise Value / EBITDA: {evToEBITDA}x
+                    </span>                  
+                    
+                
             </div>
         </div>
     </div>
