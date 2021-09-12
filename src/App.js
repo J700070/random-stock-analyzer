@@ -2,11 +2,31 @@ import './App.css';
 import React, { useEffect, useState } from 'react';
 import StockCard from './StockCard'
 
+/* 
+    2) Añadir más etiquetas
+    3) Resaltar con algún color lás mejores / peores métricas
+    4) Mostrar transacciones: https://finnhub.io/docs/api/insider-transactions
+    5) Mostrar precio de la acción: https://finnhub.io/docs/api/quote
+    6) Implementar DCF automático
+    7) Permitir filtrar por exchange / mercado
+    8) Mostrar alguna gráfica
+    9) Mostrar Expected CAGR
+    10) Mostrar noticias
+
+
+
+
+
+*/
+
+
+
 function App() {
 
     const [stockList, setStockList] = useState(0);
     const [ticker, setTicker] = useState("Searching...");
-
+    /* Filtros: Exchanges ; Currency */
+    const [filter, setFilter] = useState(["US","USD"]);
     
     function getRandomInt(min, max) {
         min = Math.ceil(min);
@@ -19,14 +39,24 @@ function App() {
             return;
         }
         let randomStock = stockList[getRandomInt(0,stockList.length)];
-        setTicker(randomStock.displaySymbol);
+        if(randomStock.currency === filter[1] && !(randomStock.description).includes("ACQUISIT")  && randomStock.mic === "XNYS" && (randomStock.type !== "") && (randomStock.type !== "PUBLIC") && (randomStock.type !== "Closed-End Fund") && (randomStock.type !== "Equity WRT")){
+            setTicker(randomStock.displaySymbol);
+        }else {
+            getSingleStock();
+        }
     }
 
     function fetchStocks(){
-
+        
         let API_KEY = 'c4r4r5qad3i9urro40f0';
-        let API_Call = 'https://finnhub.io/api/v1/stock/symbol?exchange=US&token='+ API_KEY;
-    
+        let API_Call = 'https://finnhub.io/api/v1/stock/symbol?exchange='+filter[0];
+
+        if(filter[1] !== null)
+            API_Call = API_Call.concat('&currency='+ filter[1]);
+
+        API_Call = API_Call.concat('&token='+ API_KEY);
+
+
         fetch(API_Call)
             .then(function(response){
                 return response.json();
@@ -80,3 +110,4 @@ function App() {
 }
 
 export default App;
+

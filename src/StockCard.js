@@ -4,61 +4,91 @@ import React, { useEffect, useState } from 'react';
 
 
 function StockCard({ticker}) {
+    /* Profile */
     const [profile, setProfile] = useState("Searching...");
     const [logo, setLogo] = useState("Searching...");
     const [name, setName] = useState("Searching...");
     const [market, setMarket] = useState("Searching...");
+    const [country, setCountry] = useState("Searching...");
     const [years, setYears] = useState("Searching...");
     const [marketCap, setMarketCap] = useState("Searching...");
     const [industry, setIndustry] = useState("Searching...");
     const [currency, setCurrency] = useState("Searching...");
     const [shares, setShares] = useState("Searching...");
 
+    /* Profile2 */
+    const [profile2, setProfile2] = useState("Searching...");
+    const [week52High, setWeek52High] = useState("Searching...");
+    const [week52Low, setWeek52Low] = useState("Searching...");
+    const [Week52PriceReturnDaily, set52WeekPriceReturnDaily] = useState("Searching...");
+
+    /* Company Overview */
     const [companyOverview, setCompanyOverview] = useState("Searching...");
     const [description, setDescription] = useState("Searching...");
 
     /* FINANCIALS */
-    const [EBITDA, setEBITDA] = useState("Searching...");
     const [revenueTTM , setRevenueTTM ] = useState("Searching...");
     const [grossProfitTTM , setGrossProfitTTM ] = useState("Searching...");
-
+    const [EBITDA, setEBITDA] = useState("Searching...");
+    const [operatingIncomeTTM, setOperatingIncomeTTM] = useState("Searching...");
+    const [netIncomeTTM, setNetIncomeTTM] = useState("Searching...");
+    const [netDebtAnnual, setNetDebtAnnual] = useState("Searching...");
+    const [currentRatioAnnual, setCurrentRatioAnnual] = useState("Searching...");
 
     /* PER SHARE */
-    const [bookValue, setBookValue ] = useState("Searching...");
     const [eps , setEPS ] = useState("Searching...");
+    const [bookValue, setBookValue ] = useState("Searching...");
     const [revenuePerShareTTM , setRevenuePerShareTTM ] = useState("Searching...");
     const [dilutedEPSTTM , setDilutedEPSTTM ] = useState("Searching...");
     const [dividendPerShare, setDividendPerShare ] = useState("Searching...");
+    const [freeCashFlowPerShareTTM, setFreeCashFlowPerShareTTM] = useState("Searching...");
 
-        /* Margins */
-    const [profitMargin , setProfitMargin ] = useState("Searching...");
+
+    /* Margins & Ratios*/
+    const [grossMarginTTM , setGrossMarginTTM ] = useState("Searching...");
     const [operatingMarginTTM , setOperatingMarginTTM ] = useState("Searching...");
+    const [profitMargin , setProfitMargin ] = useState("Searching...");
 
-    /* Ratios */
     const [returnOnAssetsTTM , setReturnOnAssetsTTM ] = useState("Searching...");
     const [returnOnEquityTTM , setReturnOnEquityTTM ] = useState("Searching...");
+    const [roiTTM, setRoiTTM] = useState("Searching...");
 
     /* Growth */
-    const [quarterlyEarningsGrowthYOY , setQuarterlyEarningsGrowthYOY ] = useState("Searching...");
-    const [quarterlyRevenueGrowthYOY , setQuarterlyRevenueGrowthYOY ] = useState("Searching...");
+    const [netMarginGrowth5Y, setNetMarginGrowth5Y] = useState("Searching...");
+    const [revenueGrowth3Y, setRevenueGrowth3Y] = useState("Searching...");
+    const [revenueGrowth5Y, setRevenueGrowth5Y] = useState("Searching...");
+    const [revenueGrowthTTMYoy, setRevenueGrowthTTMYoy] = useState("Searching...");
+    const [ebitdaCagr5Y, setEbitdaCagr5Y] = useState("Searching...");
+    const [epsGrowth3Y, setEpsGrowth3Y] = useState("Searching...");
+    const [epsGrowth5Y, setEpsGrowth5Y] = useState("Searching...");
+    const [epsGrowthTTMYoy, setEpsGrowthTTMYoy] = useState("Searching...");
+    const [dividendGrowthRate5Y, setdividendGrowthRate5Y] = useState("Searching...");
+    const [bookValueShareGrowth5Y, setBookValueShareGrowth5Y] = useState("Searching...");
+    const [capitalSpendingGrowth5Y, setCapitalSpendingGrowth5Y] = useState("Searching...");
     
-
     /* VALUATION */
-    const [per, setPER] = useState("Searching...");
     const [peg, setPEG] = useState("Searching...");
-    const [analystTargetPrice , setAnalystTargetPrice ] = useState("Searching...");
     const [trailingPE , setTrailingPE ] = useState("Searching...");
     const [forwardPE , setForwardPE ] = useState("Searching...");
     const [priceToSalesRatioTTM , setPriceToSalesRatioTTM ] = useState("Searching...");
     const [priceToBookRatio , setPriceToBookRatio ] = useState("Searching...");
     const [evToRevenue , setEVToRevenue ] = useState("Searching...");
     const [evToEBITDA , setEVToEBITDA ] = useState("Searching...");
+    
 
     /* Ownership */
     const [percentInsiders , setPercentInsiders ] = useState("Searching...");
     const [percentInstitutions , setPercentInstitutions ] = useState("Searching...");
+    
+    
+    
+ 
+
+
 
     let currencySymbol = "$";
+    if(currency !== "USD")
+        currencySymbol = "";
 
     function fetchProfile(ticker){
         
@@ -89,20 +119,19 @@ function StockCard({ticker}) {
             ;
     }
 
-    function fetchCompanyOverview2(ticker){
-        /* https://api.tiingo.com/tiingo/fundamentals/definitions */
-        /* https://api.tiingo.com/documentation/fundamentals */
-
-        /* let API_KEY = '3970f9ec2562c6d7f294e30bc2d8d40af51bbec6';
-        let API_Call = 'https://www.alphavantage.co/query?function=OVERVIEW&symbol='+ 'FB' +'&apikey='+ API_KEY;
+    function fetchProfile2(ticker){
+        
+        let API_KEY = 'c4r4r5qad3i9urro40f0';
+        let API_Call = 'https://finnhub.io/api/v1/stock/metric?symbol='+ ticker +'&metric=all&token=' + API_KEY;
 
         fetch(API_Call)
             .then(function(response){
                 return response.json();
+                
             })
             .then(function(data){
-                setCompanyOverview(data);
-            }); */
+                setProfile2(data.metric);
+            });
             
     }
 
@@ -113,40 +142,38 @@ function StockCard({ticker}) {
             setName(profile.name);
             setMarket(profile.exchange);
             setYears(new Date().getFullYear() - (profile.ipo).split("-")[0]);
-            setMarketCap(profile.marketCapitalization);
+            setMarketCap(profile.marketCapitalization.toFixed(2));
             setIndustry(profile.finnhubIndustry);
+            setCountry(profile.country);
             setCurrency(profile.currency);
             setShares(profile.shareOutstanding);
         }else{
-            setLogo("Not found");
-            setName("Not found");
-            setMarket("Not found");
-            setYears("Not found");
-            setMarketCap("Not found");
-            setIndustry("Not found");
-            setCurrency("Not found");
-            setShares("Not found");
+            setLogo("https://static.finnhub.io/logo/b95271c6-81b1-11ea-80d1-00000000092a.png");
+            setName(" ");
+            setMarket(" ");
+            setYears(" ");
+            setMarketCap(" ");
+            setIndustry(" ");
+            setCountry(" ")
+            setCurrency(" ");
+            setShares(" ");
         }
 
         if(companyOverview.Name !== undefined){
             setDescription(companyOverview.Description);
-            setEBITDA(companyOverview.EBITDA);
-            setPER(companyOverview.PERatio);
+            setEBITDA((companyOverview.EBITDA / 1000000).toFixed(2));
             setPEG(companyOverview.PEGRatio);
             setBookValue(companyOverview.BookValue);
             setDividendPerShare(companyOverview.DividendPerShare);
             setEPS(companyOverview.EPS);
             setRevenuePerShareTTM(companyOverview.RevenuePerShareTTM);
-            setProfitMargin(companyOverview.ProfitMargin);
-            setOperatingMarginTTM(companyOverview.OperatingMarginTTM);
-            setReturnOnAssetsTTM(companyOverview.ReturnOnAssetsTTM);
-            setReturnOnEquityTTM(companyOverview.ReturnOnEquityTTM);
-            setRevenueTTM(companyOverview.RevenueTTM);
-            setGrossProfitTTM(companyOverview.GrossProfitTTM);
+            setProfitMargin((companyOverview.ProfitMargin*100).toFixed(2));
+            setOperatingMarginTTM((companyOverview.OperatingMarginTTM*100).toFixed(2));
+            setReturnOnAssetsTTM((companyOverview.ReturnOnAssetsTTM*100).toFixed(2));
+            setReturnOnEquityTTM((companyOverview.ReturnOnEquityTTM*100).toFixed(2));
+            setRevenueTTM((companyOverview.RevenueTTM / 1000000).toFixed(2));
+            setGrossProfitTTM((companyOverview.GrossProfitTTM / 1000000).toFixed(2));
             setDilutedEPSTTM(companyOverview.DilutedEPSTTM);
-            setQuarterlyEarningsGrowthYOY(companyOverview.QuarterlyEarningsGrowthYOY);
-            setQuarterlyRevenueGrowthYOY(companyOverview.QuarterlyRevenueGrowthYOY);
-            setAnalystTargetPrice(companyOverview.AnalystTargetPrice);
             setTrailingPE(companyOverview.TrailingPE);
             setForwardPE(companyOverview.ForwardPE);
             setPriceToSalesRatioTTM(companyOverview.PriceToSalesRatioTTM);
@@ -155,39 +182,140 @@ function StockCard({ticker}) {
             setEVToEBITDA(companyOverview.EVToEBITDA);
             setPercentInsiders(companyOverview.PercentInsiders);
             setPercentInstitutions(companyOverview.PercentInstitutions);
+            
+
+
+            setOperatingIncomeTTM((revenueTTM * operatingMarginTTM / 100).toFixed(2));
+            setNetIncomeTTM((revenueTTM * profitMargin / 100).toFixed(2));
+            setGrossMarginTTM((grossProfitTTM / revenueTTM * 100).toFixed(2));
+            
         }else{
-            setDescription("Not found");
-            setEBITDA("Not found");
-            setPER("Not found");
-            setPEG("Not found");
-            setBookValue("Not found");
-            setDividendPerShare("Not found");
-            setEPS("Not found");
-            setRevenuePerShareTTM("Not found");
-            setProfitMargin("Not found");
-            setOperatingMarginTTM("Not found");
-            setReturnOnAssetsTTM("Not found");
-            setReturnOnEquityTTM("Not found");
-            setRevenueTTM("Not found");
-            setGrossProfitTTM("Not found");
-            setDilutedEPSTTM("Not found");
-            setQuarterlyEarningsGrowthYOY("Not found");
-            setQuarterlyRevenueGrowthYOY("Not found");
-            setAnalystTargetPrice("Not found");
-            setTrailingPE("Not found");
-            setForwardPE("Not found");
-            setPriceToSalesRatioTTM("Not found");
-            setPriceToBookRatio("Not found");
-            setEVToRevenue("Not found");
-            setEVToEBITDA("Not found");
-            setPercentInsiders("Not found");
-            setPercentInstitutions("Not found");
+            setDescription(" ");
+            setEBITDA(" ");
+            setPEG(" ");
+            setBookValue(" ");
+            setDividendPerShare(" ");
+            setEPS(" ");
+            setRevenuePerShareTTM(" ");
+            setProfitMargin(" ");
+            setOperatingMarginTTM(" ");
+            setReturnOnAssetsTTM(" ");
+            setReturnOnEquityTTM(" ");
+            setRevenueTTM(" ");
+            setGrossProfitTTM(" ");
+            setDilutedEPSTTM(" ");
+            setTrailingPE(" ");
+            setForwardPE(" ");
+            setPriceToSalesRatioTTM(" ");
+            setPriceToBookRatio(" ");
+            setEVToRevenue(" ");
+            setEVToEBITDA(" ");
+            setPercentInsiders(" ");
+            setPercentInstitutions(" ");
+
+            setOperatingIncomeTTM(" ");
+            setNetIncomeTTM(" ");
+            setGrossMarginTTM(" ");
         }
+
+        /* Comprobación de la existencia de los parámetros */
+        if(profile2.roiTTM !== null && profile2.roiTTM !== undefined){
+            setRoiTTM((profile2.roiTTM).toFixed(2));
+        }else{
+            setRoiTTM(" ");
+        }
+
+        if(profile2.revenueGrowthTTMYoy !== null && profile2.revenueGrowthTTMYoy !== undefined){
+            setRevenueGrowthTTMYoy((profile2.revenueGrowthTTMYoy).toFixed(2));
+        }else{
+            setRevenueGrowthTTMYoy(" ");
+        }
+
+        if(profile2.revenueGrowth3Y !== null && profile2.revenueGrowth3Y !== undefined){
+            setRevenueGrowth3Y((profile2.revenueGrowth3Y).toFixed(2));
+        }else{
+            setRevenueGrowth3Y(" ");
+        }
+
+        if(profile2.revenueGrowth5Y !== null && profile2.revenueGrowth5Y !== undefined){
+            setRevenueGrowth5Y((profile2.revenueGrowth5Y).toFixed(2));
+        }else{
+            setRevenueGrowth5Y(" ");
+        }
+
+        if(profile2.epsGrowthTTMYoy !== null && profile2.epsGrowthTTMYoy !== undefined){
+            setEpsGrowthTTMYoy((profile2.epsGrowthTTMYoy).toFixed(2));
+        }else{
+            setEpsGrowthTTMYoy(" ");
+        }
+
+        if(profile2.epsGrowth3Y !== null && profile2.epsGrowth3Y !== undefined){
+            setEpsGrowth3Y((profile2.epsGrowth3Y).toFixed(2));
+        }else{
+            setEpsGrowth3Y(" ");
+        }
+
+        if(profile2.epsGrowth5Y !== null && profile2.epsGrowth5Y !== undefined){
+            setEpsGrowth5Y((profile2.epsGrowth5Y).toFixed(2));
+        }else{
+            setEpsGrowth5Y(" ");
+        }
+
+        if(profile2.ebitdaCagr5Y !== null && profile2.ebitdaCagr5Y !== undefined){
+            setEbitdaCagr5Y((profile2.ebitdaCagr5Y).toFixed(2));
+        }else{
+            setEbitdaCagr5Y(" ");
+        }
+
+        if(profile2.netMarginGrowth5Y !== null && profile2.netMarginGrowth5Y !== undefined){
+            setNetMarginGrowth5Y((profile2.netMarginGrowth5Y).toFixed(2));
+        }else{
+            setNetMarginGrowth5Y(" ");
+        }
+
+        
+        if(profile2.currentRatioAnnual !== null && profile2.currentRatioAnnual !== undefined){
+            setCurrentRatioAnnual((profile2.currentRatioAnnual).toFixed(2));
+        }else{
+            setCurrentRatioAnnual(" ");
+        }
+
+        if(profile2.netDebtAnnual !== null && profile2.netDebtAnnual !== undefined){
+            setNetDebtAnnual((profile2.netDebtAnnual/1000000).toFixed(2));
+        }else{
+            setNetDebtAnnual(" ");
+        }
+
+        if(profile2.freeCashFlowPerShareTTM !== null && profile2.freeCashFlowPerShareTTM !== undefined){
+            setFreeCashFlowPerShareTTM((profile2.freeCashFlowPerShareTTM).toFixed(2));
+        }else{
+            setFreeCashFlowPerShareTTM(" ");
+        }
+
+        if(profile2.dividendGrowthRate5Y !== null && profile2.dividendGrowthRate5Y !== undefined){
+            setdividendGrowthRate5Y((profile2.dividendGrowthRate5Y).toFixed(2));
+        }else{
+            setdividendGrowthRate5Y(" ");
+        }
+
+        if(profile2.bookValueShareGrowth5Y !== null && profile2.bookValueShareGrowth5Y !== undefined){
+            setBookValueShareGrowth5Y((profile2.bookValueShareGrowth5Y).toFixed(2));
+        }else{
+            setBookValueShareGrowth5Y(" ");
+        }
+
+        if(profile2.capitalSpendingGrowth5Y !== null && profile2.capitalSpendingGrowth5Y !== undefined){
+            setCapitalSpendingGrowth5Y((profile2.capitalSpendingGrowth5Y).toFixed(2));
+        }else{
+            setCapitalSpendingGrowth5Y(" ");
+        }
+
     }
 
     useEffect(() => {
         fetchProfile(ticker);
         fetchCompanyOverview(ticker);
+        fetchProfile2(ticker);
     },[ticker]);
 
     useEffect(() => {
@@ -195,13 +323,13 @@ function StockCard({ticker}) {
     });
 
 return(
-<div className="p-7 bg-white bg-opacity-25 rounded shadow-xl">
-    <div className="flex items-center justify-between p-5">
+<div className="p-12 bg-white bg-opacity-25 rounded shadow-xl font-mono">
+    <div className="flex items-center justify-between ">
         <div className="flex flex-col">
             {/* HEADER */}
             <div className="flex">
                 <img id="stockLogo" alt="" src={logo}/>
-                <div className="flex flex-col ml-2 w-1/2 mb-2">
+                <div className="flex flex-col ml-2 w-1/2 mb-2 ">
                     <span className="font-bold text-md text-white ">
                         {ticker}
                     </span>
@@ -209,22 +337,25 @@ return(
                         {name}
                     </span>
                     <span className="text-sm text-white ">
-                        Market Cap: {currencySymbol} {marketCap} millions
+                        Market Cap: {currencySymbol} {addCommas(marketCap)} millions
                     </span>
                     <span className="text-sm text-white ">
-                        Outstanding Shares: {shares} millions
+                        Outstanding Shares: {addCommas(shares)} millions
                     </span>
                 </div>
 
                 {/* TAGS */}
                 <div className="flex justify-start content-start mx-6 gap-2 h-32 flex-wrap flex-shrink w-1/2 max-h-2">
-                    <span className="p-2 flex font-semibold text-xs rounded-md text-gray-500 bg-gray-200">
+                    <span className={"px-3 py-2 flex font-semibold text-xs rounded-md text-gray-500 bg-gray-200 " + (market !== " " ? "" : "hidden")}>
                         {market}
                     </span>
-                    <span className="p-2 flex font-semibold text-xs rounded-md text-gray-500 bg-gray-200">
+                    <span className={"px-3 py-2 flex font-semibold text-xs rounded-md text-gray-500 bg-gray-200" + (country !== " " ? "" : "hidden")}>
+                        {country}
+                    </span>
+                    <span className={"px-3 py-2 flex font-semibold text-xs rounded-md text-gray-500 bg-gray-200" + (industry !== " " ? "" : "hidden")}>
                         {industry}
                     </span>
-                    <span className="p-2 flex font-semibold text-xs rounded-md text-gray-500 bg-gray-200">
+                    <span className={"px-3 py-2 flex font-semibold text-xs rounded-md text-gray-500 bg-gray-200" + (years !== " " ? "" : "hidden")}>
                         {years} years since IPO
                     </span>
 
@@ -232,7 +363,7 @@ return(
             </div>
             
             <div className="flex flex-col">
-                <span className="text-sm text-white ">
+                <span className="text-xs mt-5 text-white ">
                     {description}
                 </span>
             </div>
@@ -243,18 +374,67 @@ return(
                 
                 <div className="flex flex-col">
                     {/* Financials */}
-                    <h1 className="text-white font-bold">Financials:</h1>
-                    <span className="text-sm text-white ">
-                            Revenue TTM: {currencySymbol} {revenueTTM}
+                    <h1 className="text-white font-bold">Financials TTM (MM):</h1>
+                    <span className="text-sm text-white">
+                            Revenue: {currencySymbol} {addCommas(revenueTTM)}
                     </span>
                     <span className="text-sm text-white ">
-                            Gross Profit TTM: {currencySymbol} {grossProfitTTM}
+                            Gross Profit: {currencySymbol} {addCommas(grossProfitTTM)}
                     </span>
                     <span className="text-sm text-white ">
-                            EBITDA: {currencySymbol} {EBITDA}
+                            EBITDA: {currencySymbol} {addCommas(EBITDA)}
                     </span>
                     <span className="text-sm text-white ">
-                            Net Income: {currencySymbol} TODO
+                            Operating Income: {currencySymbol} {addCommas(operatingIncomeTTM)}
+                    </span>
+                    <span className="text-sm text-white ">
+                            Net Income: {currencySymbol} {addCommas(netIncomeTTM)}
+                    </span>
+                    
+                    <span className="text-sm text-white ">
+                            Current Ratio: {currencySymbol} {addCommas(currentRatioAnnual)}
+                    </span>
+                    <span className="text-sm text-white ">
+                            Net Debt: {currencySymbol} {addCommas(netDebtAnnual)}
+                    </span>
+
+                </div>
+                
+                <div className="flex flex-col  ">
+                     {/* Margins & Ratios*/}
+                     <h1 className="text-white font-bold">Margins & Ratios:</h1>
+                    <span className="text-sm text-white ">
+                            Gross Margin TTM: {grossMarginTTM}%
+                    </span>
+                    <span className="text-sm text-white ">
+                            Operating Margin TTM: {operatingMarginTTM}%
+                    </span>
+                    <span className={"mb-2 text-sm text-white "+(profitMargin > 20 ? "text-green-400 font-bold" : "")}>
+                            Net Margin TTM: {profitMargin}%
+                    </span>
+                    
+                    <span className="text-sm text-white ">
+                            RoA TTM: {returnOnAssetsTTM}%
+                    </span>
+                    <span className={"text-sm text-white "+ (returnOnEquityTTM > 15 ? "text-green-400 font-bold" : "")}>
+                            RoE TTM: {returnOnEquityTTM}%
+                    </span>
+                    <span className="text-sm text-white ">
+                            RoIC TTM: {roiTTM}%
+                    </span>
+                </div>
+                
+                <div className="flex flex-col  ">
+                     {/* Management */}
+                   <h1 className="text-white font-bold">Ownership:</h1>
+                    <span className={"text-sm text-white " + (percentInsiders > 5 ? "text-green-400 font-bold" : "")}>
+                            Insider Ownership: {percentInsiders}%
+                    </span>
+                    <span className="text-sm text-white ">
+                            Institutional Ownership: {percentInstitutions}%
+                    </span>
+                    <span className="text-sm text-white ">
+                            Transactions: TODO
                     </span>
                 </div>
                 
@@ -267,48 +447,22 @@ return(
                     <span className="text-sm text-white ">
                             Basic EPS: {currencySymbol} {eps}
                     </span>
-                    
-                    <span className="text-sm text-white ">
+                    <span className={"text-sm text-white "+ (dilutedEPSTTM < 0 ? "text-red-400 font-bold" : "")}>
                             Diluted EPS TTM: {currencySymbol} {dilutedEPSTTM}
                     </span>
                     <span className="text-sm text-white ">
-                            Book Value per Share: {currencySymbol} {bookValue}
+                            Free Cash Flow per Share: {currencySymbol} {freeCashFlowPerShareTTM}
                     </span>
                     <span className="text-sm text-white ">
-                            Cash Flow per Share: {currencySymbol} TODO
-                    </span>
+                            Book Value per Share: {currencySymbol} {bookValue}
+                    </span>  
+                    <span className="text-sm text-white ">
+                            Net Cash per Share: {currencySymbol} {bookValue}
+                    </span>  
                     <span className="text-sm text-white ">
                             Dividend per Share: {currencySymbol} {dividendPerShare}
                     </span>
-                </div>
-                
-                <div className="flex flex-col  ">
-                    {/* Margins */}
-                    <h1 className="text-white font-bold">Margins:</h1>
-                    <span className="text-sm text-white ">
-                            Gross Margin TTM: TODO%
-                    </span>
-                    <span className="text-sm text-white ">
-                            Operating Margin TTM: {operatingMarginTTM}%
-                    </span>
-                    <span className="text-sm text-white ">
-                            Net Margin TTM: {profitMargin}%
-                    </span>
                     
-                </div>
-                
-                <div className="flex flex-col  ">
-                    {/* Ratios */}
-                    <h1 className="text-white font-bold">Ratios:</h1>
-                    <span className="text-sm text-white ">
-                            Return on Assets TTM: {returnOnAssetsTTM}%
-                    </span>
-                    <span className="text-sm text-white ">
-                            Return on Equity TTM: {returnOnEquityTTM}%
-                    </span>
-                    <span className="text-sm text-white ">
-                            Return on Invested Capital TTM: TODO%
-                    </span>
 
                 </div>
                 
@@ -316,47 +470,52 @@ return(
                     {/* Growth */}
                     <h1 className="text-white font-bold">Growth:</h1>
                     <span className="text-sm text-white ">
-                        Qrtly Revenue Growth YoY: {quarterlyRevenueGrowthYOY}%
+                        Revenue Growth TTM: {revenueGrowthTTMYoy}%
                     </span>
                     <span className="text-sm text-white ">
-                        Qrtly Earnings Growth YoY: {quarterlyEarningsGrowthYOY}%
+                        Revenue Growth 3Y: {revenueGrowth3Y}%
                     </span>
-                    
+                    <span className="text-sm text-white ">
+                        Revenue Growth 5Y: {revenueGrowth5Y}%
+                    </span>
+                    <span className="text-sm text-white ">
+                        EPS Growth TTM: {epsGrowthTTMYoy}%
+                    </span>
+                    <span className="text-sm text-white ">
+                        EPS Growth 3Y: {epsGrowth3Y}%
+                    </span>
+                    <span className="text-sm text-white ">
+                        EPS Growth 5Y: {epsGrowth5Y}%
+                    </span>
+                    <span className="text-sm text-white ">
+                        EBITDA CAGR 5Y: {ebitdaCagr5Y}%
+                    </span>
+                    <span className="text-sm text-white ">
+                        Net Margin Growth 5Y: {netMarginGrowth5Y} %
+                    </span>
+                    <span className="text-sm text-white ">
+                        Dividend Growth 5Y: {dividendGrowthRate5Y} %
+                    </span>
+                    <span className="text-sm text-white ">
+                        Book Value per Share Growth 5Y: {bookValueShareGrowth5Y} %
+                    </span>
+                    <span className="text-sm text-white ">
+                        Capital Spending Growth 5Y: {capitalSpendingGrowth5Y} %
+                    </span>
+
                 </div>
                 
                 <div className="flex flex-col  ">
-                    {/* Ownership */}
-                    <h1 className="text-white font-bold">Ownership:</h1>
-                    <span className="text-sm text-white ">
-                            Insider Ownership: {percentInsiders}%
-                    </span>
-                    <span className="text-sm text-white ">
-                            Institutional Ownership: {percentInstitutions}%
-                    </span>
-                </div>
-                
-            </div>
-            <hr className="border-opacity-25 m-10"></hr>
-            {/* Valuation */}
-            <div className="flex flex-col flex-wrap max-h-36">
+                    {/* Valuation */}
                     <h1 className="text-white font-bold">Valuation:</h1>
-                    <span className="text-sm text-white ">
-                            Price / Earnings: {per}x
-                    </span>
-                    <span className="text-sm text-white ">
-                            PEG: {peg}x
-                    </span>
                     <span className="text-sm text-white ">
                             Price / Trailing Earnings: {trailingPE}x
                     </span>
-                    <span className="text-sm text-white ">
+                    <span className={"text-sm text-white " + ((trailingPE>forwardPE)&&(forwardPE <20)&&(forwardPE >0)  ? "text-green-400 font-bold" : "")}>
                             Price / Forward Earnings: {forwardPE}x
                     </span>
                     <span className="text-sm text-white ">
-                        Analyst Price Target: {currencySymbol}  {analystTargetPrice}
-                    </span>
-                    <span className="text-sm text-white ">
-                            Price / Sales: {priceToSalesRatioTTM}x
+                            PEG: {peg}x
                     </span>
                     <span className="text-sm text-white ">
                             Price / Sales: {priceToSalesRatioTTM}x
@@ -367,10 +526,10 @@ return(
                     <span className="text-sm text-white ">
                             Enterprise Value / Revenue: {evToRevenue}x
                     </span>
-                    <span className="text-sm text-white ">
+                    <span className={"text-sm text-white "+ ((evToEBITDA < 15)&&(evToEBITDA > 0) ? "text-green-400 font-bold" : "")}>
                             Enterprise Value / EBITDA: {evToEBITDA}x
-                    </span>                  
-                    
+                    </span>      
+                </div>
                 
             </div>
         </div>
@@ -382,3 +541,16 @@ return(
 
 )}
 export default StockCard;
+
+
+function addCommas(nStr){
+	nStr += '';
+	let x = nStr.split('.');
+	let x1 = x[0];
+	let x2 = x.length > 1 ? '.' + x[1] : '';
+	var rgx = /(\d+)(\d{3})/;
+	while (rgx.test(x1)) {
+		x1 = x1.replace(rgx, '$1,$2');
+	}
+	return x1 + x2;
+}
