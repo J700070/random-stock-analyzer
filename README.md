@@ -3,7 +3,7 @@
 ### Tired of performing worse than some dartist monkey? Pick a random stock and perform just like them!
 The random stock picker provides random tickers with fundamental data from different API's, the objective is to provide a unique way of discovering and analysing stocks.
 
-Currently the app provides:
+Currently the app provides the following information:
 
 
 ### Basic Info:
@@ -16,7 +16,7 @@ Currently the app provides:
 - Industry
 - Years since IPO
 
-### Financials
+### Financials:
 - Revenue TTM
 - Gross Profit TTM
 - EBITDA TTM
@@ -25,21 +25,21 @@ Currently the app provides:
 - Current Ratio TTM
 - Net Debt
 
-### Margins
+### Margins:
 - Gross Margin
 - Operating Margin
 - Net Margin
 
-### Ratios
+### Ratios:
 - RoA
 - RoE
 - RoIC
 
-### Ownership
+### Ownership:
 - Insider Ownership
 - Institutional Ownership
 
-### Per Share
+### Per Share:
 - Revenue per Share TTM 
 - Basic EPS TTM
 - Diluted EPS TTM
@@ -48,7 +48,7 @@ Currently the app provides:
 - Net Cash per share TTM
 - Dividend per Share TTM
 
-### Growth
+### Growth:
 - Revenue Growth TTM / 3Y / 5Y
 - EPS Growth TTM / 3Y / 5Y
 - EBITDA CAGR 5Y
@@ -57,7 +57,7 @@ Currently the app provides:
 - Book Value per Share Growth 5Y
 - Capital Spending Growth 5Y
 
-### Valuation
+### Valuation:
 - Trailing PER
 - Forward PER
 - PEG
