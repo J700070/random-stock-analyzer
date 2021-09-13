@@ -115,6 +115,7 @@ function StockCard({ticker}) {
             })
             .then(function(data){
                 setCompanyOverview(data);
+                console.log(data);
             });
             ;
     }
@@ -406,20 +407,20 @@ return(
                     <span className="text-sm text-white ">
                             Gross Margin TTM: {grossMarginTTM}%
                     </span>
-                    <span className="text-sm text-white ">
+                    <span className={"text-sm text-white " + (operatingMarginTTM > 50 ? "text-green-400 font-bold" : "")}>
                             Operating Margin TTM: {operatingMarginTTM}%
                     </span>
                     <span className={"mb-2 text-sm text-white "+(profitMargin > 20 ? "text-green-400 font-bold" : "")}>
                             Net Margin TTM: {profitMargin}%
                     </span>
                     
-                    <span className="text-sm text-white ">
+                    <span className={"text-sm text-white " + (returnOnAssetsTTM > 20 ? "text-green-400 font-bold" : "")}>
                             RoA TTM: {returnOnAssetsTTM}%
                     </span>
-                    <span className={"text-sm text-white "+ (returnOnEquityTTM > 15 ? "text-green-400 font-bold" : "")}>
+                    <span className={"text-sm text-white "+ (returnOnEquityTTM > 20 ? "text-green-400 font-bold" : "")}>
                             RoE TTM: {returnOnEquityTTM}%
                     </span>
-                    <span className="text-sm text-white ">
+                    <span className={"text-sm text-white " + (roiTTM > 20 ? "text-green-400 font-bold" : "")}>
                             RoIC TTM: {roiTTM}%
                     </span>
                 </div>
@@ -444,13 +445,13 @@ return(
                     <span className="text-sm text-white ">
                             Revenue per Share TTM:  {currencySymbol} {revenuePerShareTTM}
                     </span>
-                    <span className="text-sm text-white ">
+{/*                     <span className="text-sm text-white ">
                             Basic EPS: {currencySymbol} {eps}
-                    </span>
+                    </span> */}
                     <span className={"text-sm text-white "+ (dilutedEPSTTM < 0 ? "text-red-400 font-bold" : "")}>
                             Diluted EPS TTM: {currencySymbol} {dilutedEPSTTM}
                     </span>
-                    <span className="text-sm text-white ">
+                    <span className={"text-sm text-white "+ (freeCashFlowPerShareTTM < 0 ? "text-red-400 font-bold" : "")}>
                             Free Cash Flow per Share: {currencySymbol} {freeCashFlowPerShareTTM}
                     </span>
                     <span className="text-sm text-white ">
@@ -469,39 +470,39 @@ return(
                 <div className="flex flex-col  ">
                     {/* Growth */}
                     <h1 className="text-white font-bold">Growth:</h1>
-                    <span className="text-sm text-white ">
+                    <span className={"text-sm text-white "+ (revenueGrowthTTMYoy < 0 ? "text-red-400 font-bold" : "") + (revenueGrowthTTMYoy > 20 ? "text-green-400 font-bold" : "")}>
                         Revenue Growth TTM: {revenueGrowthTTMYoy}%
                     </span>
-                    <span className="text-sm text-white ">
+                    <span className={"text-sm text-white "+ (revenueGrowth3Y < 0 ? "text-red-400 font-bold" : "") + (revenueGrowth3Y > 15 ? "text-green-400 font-bold" : "")}>
                         Revenue Growth 3Y: {revenueGrowth3Y}%
                     </span>
-                    <span className="text-sm text-white ">
+                    <span className={"text-sm text-white "+ (revenueGrowth5Y < 0 ? "text-red-400 font-bold" : "") + (revenueGrowth5Y > 10 ? "text-green-400 font-bold" : "")}>
                         Revenue Growth 5Y: {revenueGrowth5Y}%
                     </span>
-                    <span className="text-sm text-white ">
+                    <span className={"text-sm text-white "+ (epsGrowthTTMYoy < 0 ? "text-red-400 font-bold" : "") + (epsGrowthTTMYoy > 20 ? "text-green-400 font-bold" : "")}>
                         EPS Growth TTM: {epsGrowthTTMYoy}%
                     </span>
-                    <span className="text-sm text-white ">
+                    <span className={"text-sm text-white "+ (epsGrowth3Y < 0 ? "text-red-400 font-bold" : "") + (epsGrowth3Y > 15 ? "text-green-400 font-bold" : "")}>
                         EPS Growth 3Y: {epsGrowth3Y}%
                     </span>
-                    <span className="text-sm text-white ">
+                    <span className={"text-sm text-white "+ (epsGrowth5Y < 0 ? "text-red-400 font-bold" : "") + (epsGrowth5Y > 10 ? "text-green-400 font-bold" : "")}>
                         EPS Growth 5Y: {epsGrowth5Y}%
                     </span>
-                    <span className="text-sm text-white ">
+                    <span className={"text-sm text-white "+ (ebitdaCagr5Y < 0 ? "text-red-400 font-bold" : "") + (ebitdaCagr5Y > 10 ? "text-green-400 font-bold" : "")}>
                         EBITDA CAGR 5Y: {ebitdaCagr5Y}%
                     </span>
-                    <span className="text-sm text-white ">
+                    <span className={"text-sm text-white "+ (netMarginGrowth5Y < 0 ? "text-red-400 font-bold" : "") + (netMarginGrowth5Y > 2 ? "text-green-400 font-bold" : "")}>
                         Net Margin Growth 5Y: {netMarginGrowth5Y} %
                     </span>
-                    <span className="text-sm text-white ">
+                    <span className={"text-sm text-white "+ (dividendGrowthRate5Y < 0 ? "text-red-400 font-bold" : "") + (dividendGrowthRate5Y > 20 ? "text-green-400 font-bold" : "")}>
                         Dividend Growth 5Y: {dividendGrowthRate5Y} %
                     </span>
-                    <span className="text-sm text-white ">
-                        Book Value per Share Growth 5Y: {bookValueShareGrowth5Y} %
+                    <span className={"text-sm text-white "+ (bookValueShareGrowth5Y < 0 ? "text-red-400 font-bold" : "") + (bookValueShareGrowth5Y > 10 ? "text-green-400 font-bold" : "")}>
+                        BV / Share Growth 5Y: {bookValueShareGrowth5Y} %
                     </span>
-                    <span className="text-sm text-white ">
-                        Capital Spending Growth 5Y: {capitalSpendingGrowth5Y} %
-                    </span>
+                    {/* <span className={"text-sm text-white "+ (capitalSpendingGrowth5Y > 10 ? "text-red-400 font-bold" : "") + (capitalSpendingGrowth5Y < -5 ? "text-green-400 font-bold" : "")}>
+                        Cap. Spending Growth 5Y: {capitalSpendingGrowth5Y} %
+                    </span> */}
 
                 </div>
                 

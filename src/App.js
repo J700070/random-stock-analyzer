@@ -1,20 +1,23 @@
 import './App.css';
 import React, { useEffect, useState } from 'react';
 import StockCard from './StockCard'
-
+import Particles from 'react-particles-js';
 /* 
-    2) Añadir más etiquetas
+    1) Busqueda de stock concreto
+    2) Añadir más etiquetas: OPORTUNIDAD (Alto crecimientom, ROIC, insiders y valoración) ; Small-mid-big-cap
     3) Resaltar con algún color lás mejores / peores métricas
     4) Mostrar transacciones: https://finnhub.io/docs/api/insider-transactions
     5) Mostrar precio de la acción: https://finnhub.io/docs/api/quote
     6) Implementar DCF automático
     7) Permitir filtrar por exchange / mercado
-    8) Mostrar alguna gráfica
+    8) Mostrar alguna gráfica -> DCF en 3 casos ; Barritas visuales estilo Gurufocus
     9) Mostrar Expected CAGR
     10) Mostrar noticias
+    11) Añadir consejos: Si el ROE es mucho más alto que el ROA comprobar la deuda
+    12) Utilizar stocks que me gustan -> Inferir métricas que puedan detectar otros iguales
 
 
-
+    Última: Vender la página
 
 
 */
@@ -76,11 +79,11 @@ function App() {
         getSingleStock();
     },[stockList]);
 
-    
   return (
     
     <div className="w-full h-screen font-sans">
-        <div className="grid grid-cols-7 ">
+        
+        <div className="grid grid-cols-7">
             <div className="col-span-4 m-6">
                 <StockCard ticker={ticker}/>
             </div>
@@ -89,7 +92,7 @@ function App() {
                 <div className="grid grid-rows-10">
                     <div className="w-full p-10 bg-white bg-opacity-25 rounded shadow-xl row-start-1 row-end-2">
                         <h1 className="mb-8 text-3xl font-light text-center text-white">
-                            Random Stock Picker
+                            Random Stock Analyser
                         </h1>
                         <div className="mb-8 text-5xl text-center text-white">
                             <h2>{ticker}</h2>
@@ -104,6 +107,19 @@ function App() {
             </div>
 
         </div>
+
+        <Particles className="background w-full h-screen"
+            params={{
+                "particles": {
+                    "number": {
+                        "value": 100
+                    },
+                    "size": {
+                        "value": 3
+                    }
+                },
+            }} />
+
     </div>
 
   );
